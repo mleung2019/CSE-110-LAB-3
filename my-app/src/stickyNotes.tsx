@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 // different components. In this case, it is not necessary.
 
 // Data structures and dummy data
-import { Label, Note } from "./types"; // Import the Label type from the appropriate module
+import { Label } from "./types"; // Import the Label type from the appropriate module
 import { dummyNotesList } from "./constants"; // Import the dummyNotesList from the appropriate module
 
 // Theming
@@ -57,7 +57,7 @@ export const StickyNotes = () => {
 
   // Note deletion button functionality
   const deleteNoteHandler = (noteId: number) => {
-    const updatedList = noteList.filter((note) => note.id != noteId);
+    const updatedList = noteList.filter((note) => note.id !== noteId);
     setNoteList(updatedList);
   };
 
@@ -141,9 +141,17 @@ export const StickyNotes = () => {
                 </button>
                 <button onClick={() => deleteNoteHandler(note.id)}>x</button>
               </div>
-              <h2 contentEditable="true"> {note.title} </h2>
-              <p contentEditable="true"> {note.content} </p>
-              <p contentEditable="true"> {note.label} </p>
+              <h2 contentEditable="true" suppressContentEditableWarning={true}>
+                {note.title}{" "}
+              </h2>
+              <p contentEditable="true" suppressContentEditableWarning={true}>
+                {" "}
+                {note.content}{" "}
+              </p>
+              <p contentEditable="true" suppressContentEditableWarning={true}>
+                {" "}
+                {note.label}{" "}
+              </p>
             </div>
           ))}
         </div>
@@ -162,7 +170,7 @@ export const StickyNotes = () => {
           {noteList
             .filter((note) => note.isLiked)
             .map((note) => (
-              <p> {note.title} </p>
+              <p key={note.id}> {note.title} </p>
             ))}
         </div>
       </div>
