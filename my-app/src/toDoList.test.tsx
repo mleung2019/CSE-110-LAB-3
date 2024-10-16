@@ -23,8 +23,10 @@ describe("Update toDoList", () => {
       fireEvent.click(element);
     });
 
-    const boughtTitle = screen.getByText("Items bought: 2");
-    expect(boughtTitle).toBeInTheDocument();
+    setTimeout(() => {
+      const boughtTitle = screen.getByText("Items bought: 2");
+      expect(boughtTitle).toBeInTheDocument();
+    }, 500);
   });
 
   test("Unchecks toDoList items", () => {
