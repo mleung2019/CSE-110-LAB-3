@@ -1,31 +1,43 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { ToDoList } from "./toDoList";
-import { decodedTextSpanIntersectsWith } from "typescript";
 
 // Read toDoList
 describe("Read toDoList", () => {
-  test("Read all items that are created in the list", () => {
+  test("Reads all items that are created in the list", () => {
     render(<ToDoList />);
 
-    const appleTitle = screen.getByText("Apples");
-    const bananaTitle = screen.getByText("Bananas");
-    expect(appleTitle).toBeInTheDocument();
-    expect(bananaTitle).toBeInTheDocument();
+    const appleText = screen.getByText("Apples");
+    const bananaText = screen.getByText("Bananas");
+    expect(appleText).toBeInTheDocument();
+    expect(bananaText).toBeInTheDocument();
   });
 });
 
 // Update toDoList
 describe("Update toDoList", () => {
-  test("Check if correct number of items is checked", () => {
+  test("Checks toDoList items", () => {
     render(<ToDoList />);
 
     const allChecks = screen.getAllByTestId("checkbox") as HTMLInputElement[];
     allChecks.forEach((element) => {
-      //   expect(element.checked).toEqual(false);
       fireEvent.click(element);
     });
 
-    const boughtTitle = screen.getByText(`Items bought: 2`);
+    const boughtTitle = screen.getByText("Items bought: 2");
+    expect(boughtTitle).toBeInTheDocument();
+  });
+
+  test("Unchecks toDoList items", () => {
+    render(<ToDoList />);
+
+    const allChecks = screen.getAllByTestId("checkbox") as HTMLInputElement[];
+    allChecks.forEach((element) => {
+      fireEvent.click(element);
+    });
+
+    fireEvent.click(allChecks[1]);
+
+    const boughtTitle = screen.getByText("Items bought: 1");
     expect(boughtTitle).toBeInTheDocument();
   });
 });

@@ -14,32 +14,22 @@ export function ToDoList() {
   function handleCheckboxClick(e: React.ChangeEvent<HTMLInputElement>) {
     const checkbox: HTMLInputElement = e.target as HTMLInputElement;
 
-    const diff = checkbox.checked ? 1 : -1;
-    setNumRemainingItems(numRemainingItems + diff);
-
     const itemName = checkbox.name;
-    items[itemName] = { name: itemName, isPurchased: checkbox.checked };
+    // Filter items to take out the old item, and replace it with the new item
+    const newItem = { name: itemName, isPurchased: checkbox.checked };
+    const newItems = items.filter((i) => i.name !== itemName);
+    if (checkbox.checked) {
+      // If checked, push to the end
+      newItems.push(newItem);
+    } else {
+      // If unchecked, push to the beginning
+      newItems.unshift(newItem);
+    }
+    setItems(newItems);
+
+    const numChecked = newItems.filter((i) => i.isPurchased).length;
+    setNumRemainingItems(numChecked);
   }
-
-  // function handleCheckboxClick(e: React.ChangeEvent<HTMLInputElement>) {
-  //   const checkbox: HTMLInputElement = e.target as HTMLInputElement;
-
-  //   const itemName = checkbox.name;
-
-  //   const itemIndex = items.findIndex((item) => item.name === itemName);
-  //   items[itemIndex] = { name: itemName, isPurchased: checkbox.checked };
-
-  //   const uncheckedItems = items.filter((item) => !item.isPurchased);
-  //   const checkedItems = items.filter((item) => item.isPurchased);
-
-  //   const newItems = uncheckedItems.concat(checkedItems);
-
-  //   setItems(newItems);
-
-  //   const diff = checkbox.checked ? 1 : -1;
-
-  //   setNumRemainingItems(numRemainingItems + diff);
-  // }
 
   return (
     <div className="App">
